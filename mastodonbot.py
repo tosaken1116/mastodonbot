@@ -152,8 +152,8 @@ def ability():
         if len(toots) == 0:
             break
         for toot in toots:
-            date = datetime.datetime.strptime(toot['created_at'], '%Y-%m-%d %H:%M:%S')
-            considerdate = datetime.datetime.strptime('2021-12-31','%Y-%m-%d %H:%M:%S')
+            date = datetime.strptime(toot['created_at'], '%Y-%m-%d %H:%M:%S')
+            considerdate = datetime.strptime('2021-12-31','%Y-%m-%d %H:%M:%S')
             if date == considerdate:
                 flag = True
                 break
