@@ -5,6 +5,8 @@ import time
 import bs4
 import threading
 import os
+import random
+import numpy
 
 load_dotenv()
 acsess_key = os.environ.get('ACCESS_TOKEN')
