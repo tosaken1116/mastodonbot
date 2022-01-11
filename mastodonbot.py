@@ -140,9 +140,9 @@ def mikuji(content, st, id):
         friendluck = random.choices(achivement,k = 1,weights = p)
         result = text + '\n勉学:' + studyluck[0] + '\n恋愛:' + heartluck[0] + '\n探し物:' + hopeluck[0] + '\n友情:' + friendluck[0] + '\nこの御籤はフィクションです。\n実在の人物や団体とは関係ありません。\n仮に損害を与えられたとしても当方は一切の責任を負いません'
         mastodon.status_reply(st,result)
-        ability()
+        
     
-def ability():
+def report():
     print ('main1')
     count = [0,0,0,0,0,0,0]
     flag = False
@@ -152,29 +152,35 @@ def ability():
         if len(toots) == 0:
             break
         for toot in toots:
-            date = datetime.strptime(toot['created_at'], '%Y-%m-%d %H:%M:%S')
-            considerdate = datetime.strptime('2021-12-31','%Y-%m-%d %H:%M:%S')
-            if date == considerdate:
+            date = toot['created_at']
+            considerdate = datetime.strptime('2021-12-31+0000','%Y-%m-%d%z')
+            if date < considerdate:
                 flag = True
                 break
             if '吉' in toot['content'] or '凶' in toot['content']:
                 if '@' in toot['content'] and toot['reblogs_count'] == 0:
                     es = 0
                     if '大吉' in toot['content']:
-                        print('大吉')
                         count[0] +=1
+                        continue
                     if '中吉' in toot['content']:
                         count[1] +=1
+                        continue
                     if '小吉' in toot['content']:
                         count[2] +=1
+                        continue
                     if '吉' in toot['content']:
                         count[3] +=1
+                        continue
                     if '末吉' in toot['content']:
                         count[4] +=1
+                        continue
                     if '凶' in toot['content']:
                         count[5] +=1
+                        continue
                     if '大凶' in toot['content']:
                         count[6] +=1
+                        continue
                     else:
                         pass
         if flag:
@@ -187,9 +193,13 @@ def ability():
 def hoge():
     mastodon.stream_user(Stream())
 
+hoge()
+
 threading.Thread(target = hoge).start()
 while(True):
     date = datetime.now()
     if date.hour == 0 or date.hour == 12:
         main()
+    if date.hour == 0:
+        report()
     time.sleep(3600)
